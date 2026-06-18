@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prova de Português — 5º Ano — Gênero Textual: Reportagem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif; font-weight: 600; min-height: 100vh; padding: 2rem 4vw;
+    background: #fdf8ee;
+    background-image: repeating-linear-gradient(#fdf8ee 0 31px, #e8dfc8 31px 32px);
+    color: #4a3a2a;
+  }
+  .container { width: 100%; max-width: none; margin: 0; position: relative; }
+
+  .header {
+    background: #ff8c42; border-radius: 18px 18px 4px 4px; padding: 1.5rem 2rem; margin-bottom: 1.5rem;
+    text-align: center; position: relative; transform: rotate(-0.5deg);
+    box-shadow: 3px 4px 0 rgba(0,0,0,0.08);
+  }
+  .header::after {
+    content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    width: 90px; height: 22px; background: #ffe5cc; opacity: 0.8; border-radius: 2px;
+  }
+  .header .escola { font-size: 14px; letter-spacing: 1px; color: #4a1b0c; font-weight: 800; }
+  .header h1 { font-family: 'Patrick Hand', cursive; font-size: 38px; color: #4a1b0c; margin: 6px 0; }
+  .header .sub { font-size: 17px; font-weight: 700; color: #5a2a0c; }
+
+  .dados-aluno {
+    background: #fff; border: 2px dashed #ff8c42; border-radius: 16px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;
+  }
+  .dados-aluno label { font-family: 'Patrick Hand', cursive; font-size: 16px; color: #06a77d; display: block; margin-bottom: 4px; }
+  .dados-aluno input {
+    width: 100%; padding: 10px 12px; border: 2px solid #f0e6d2; border-radius: 10px;
+    background: #fffdf7; font-size: 16px; font-weight: 700; font-family: inherit; outline: none; color: #4a3a2a;
+  }
+  .dados-aluno input:focus { border-color: #06a77d; }
+
+  .lock-msg {
+    background: #fff3cd; color: #7a5b00; border-radius: 12px; padding: 12px 16px;
+    margin-bottom: 1.25rem; font-size: 16px; font-weight: 700; text-align: center;
+    border: 2px solid #ffe69c;
+  }
+  .lock-msg.hidden { display: none; }
+
+  .progresso {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;
+    background: #fff; border-radius: 16px; padding: 10px 18px; border: 2px solid #ffe5cc;
+  }
+  .progresso-barra { flex: 1; height: 12px; background: #f0e6d2; border-radius: 10px; overflow: hidden; }
+  .progresso-fill { width: 0%; height: 100%; background: #06a77d; border-radius: 10px; transition: width 0.2s; }
+  .progresso span { font-family: 'Patrick Hand', cursive; font-size: 17px; color: #06a77d; white-space: nowrap; }
+
+  fieldset#provaArea { border: none; }
+  fieldset#provaArea[disabled] { opacity: 0.4; pointer-events: none; }
+
+  .regra-box, .texto-box {
+    background: #fff; border-left: 6px solid #06a77d; border-radius: 16px;
+    padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; box-shadow: 2px 3px 0 rgba(0,0,0,0.05);
+  }
+  .regra-box h2, .texto-box h2 { font-family: 'Patrick Hand', cursive; font-size: 23px; color: #06a77d; margin-bottom: 10px; }
+  .regra-box p, .texto-box p { font-size: 17px; font-weight: 700; line-height: 1.7; color: #4a3a2a; margin-bottom: 8px; }
+  .regra-box p + p, .texto-box p + p { margin-top: 8px; }
+  .regra-box table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+  .regra-box table th, .regra-box table td { border: 1px solid #f0e6d2; padding: 6px 10px; text-align: left; }
+  .regra-box table th { background: #fff3e3; color: #ff8c42; }
+
+  .bloco-titulo {
+    font-family: 'Patrick Hand', cursive; font-size: 24px; color: #ef476f;
+    margin: 1.5rem 0 0.75rem; padding-left: 4px;
+  }
+
+  .question-card {
+    background: #fff; border-radius: 18px; padding: 1.5rem; position: relative;
+    box-shadow: 2px 4px 0 rgba(0,0,0,0.06); border: 2px solid #f0e6d2; margin-bottom: 1rem;
+  }
+  .qnum {
+    display: inline-block; background: #ef476f; color: #fff; font-family: 'Patrick Hand', cursive;
+    font-size: 16px; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; transform: rotate(-2deg);
+  }
+  .qtext { font-size: 20px; font-weight: 800; line-height: 1.4; margin-bottom: 16px; color: #4a3a2a; }
+  .option {
+    display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px;
+    margin-bottom: 8px; background: #fffdf7; border: 2px solid #f0e6d2; cursor: pointer;
+  }
+  .option:hover { border-color: #06a77d; }
+  .option.selected { background: #e1f5ee; border-color: #06a77d; }
+  .option.resposta-correta { background: #d7f5e3 !important; border-color: #06a77d !important; }
+  .option.resposta-correta .letra { background: #06a77d; color: #fff; }
+  .option.resposta-incorreta { background: #ffe1e8 !important; border-color: #ef476f !important; }
+  .option.resposta-incorreta .letra { background: #ef476f; color: #fff; }
+  .letra {
+    width: 46px; height: 46px; border-radius: 12px; background: #ff8c42; display: flex;
+    align-items: center; justify-content: center; font-family: 'Baloo 2', sans-serif; font-size: 24px;
+    font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .option span.txt { font-size: 17.5px; font-weight: 700; line-height: 1.4; }
+
+  .btn-corrigir {
+    display: block; width: 100%; padding: 18px; margin: 1.5rem 0;
+    background: #ef476f; color: #fff; border: none; border-radius: 16px; font-size: 21px; font-weight: 800;
+    font-family: 'Patrick Hand', cursive; cursor: pointer; box-shadow: 0 5px 0 #b22d4d; transition: transform 0.1s;
+  }
+  .btn-corrigir:hover { transform: translateY(2px); box-shadow: 0 3px 0 #b22d4d; }
+
+  .btn-tentar-novo {
+    display: inline-block; margin-top: 18px; padding: 12px 26px;
+    background: #2f8fef; color: #fff; border: none; border-radius: 14px; font-size: 16px; font-weight: 800;
+    font-family: 'Patrick Hand', cursive; cursor: pointer; box-shadow: 0 4px 0 #1c5fa8; transition: transform 0.1s;
+  }
+  .btn-tentar-novo:hover { transform: translateY(2px); box-shadow: 0 2px 0 #1c5fa8; }
+
+  .resultado {
+    background: #fff; border-radius: 20px; padding: 2rem; text-align: center;
+    margin-bottom: 1.5rem; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); border: 2px solid #f0e6d2; display: none;
+  }
+  .resultado.show { display: block; }
+  .resultado .nota { font-family: 'Patrick Hand', cursive; font-size: 48px; font-weight: 700; margin-bottom: 6px; }
+  .resultado .detalhe { font-size: 17px; font-weight: 700; color: #6a5a4a; margin-bottom: 14px; }
+  .resultado .mensagem { font-size: 23px; font-weight: 700; padding: 16px; border-radius: 14px; font-family: 'Patrick Hand', cursive; }
+
+  .nota-excelente { color: #06a77d; }
+  .nota-bom { color: #2f8fef; }
+  .nota-atencao { color: #ffb703; }
+  .nota-baixa { color: #ef476f; }
+  .msg-excelente { background: #e1f5ee; color: #06a77d; }
+  .msg-bom { background: #e6f1fb; color: #2f8fef; }
+  .msg-atencao { background: #fff3cd; color: #92400e; }
+  .msg-baixa { background: #ffe1e8; color: #ef476f; }
+
+  .alerta-incompleto {
+    background: #ffe1e8; color: #ef476f; border-radius: 12px; padding: 12px 16px;
+    margin: 1rem 0; font-size: 16px; font-weight: 700; text-align: center; display: none;
+  }
+  .alerta-incompleto.show { display: block; }
+
+  .sticker { position: absolute; top: -12px; right: -8px; font-size: 26px; transform: rotate(12deg); }
+
+  .doodle { position: absolute; pointer-events: none; z-index: 5; filter: drop-shadow(1px 3px 2px rgba(0,0,0,0.12)); }
+  .d1 { left: -50px; top: -10px; transform: rotate(-4deg); }
+  .d2 { right: -50px; top: 6px; transform: rotate(4deg); }
+  .d3 { left: -52px; top: 178px; transform: rotate(5deg); }
+  .d4 { right: -50px; top: 272px; transform: rotate(-5deg); }
+  .d5 { left: -50px; top: 412px; transform: rotate(3deg); }
+  .d6 { right: -48px; top: 600px; transform: rotate(-4deg); }
+  @media (max-width: 980px) { .doodle { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="doodle d1"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#06a77d" text-anchor="middle">L</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d2"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ff8c42" text-anchor="middle">E</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d3"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ef476f" text-anchor="middle">T</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d4"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#7c5cff" text-anchor="middle">R</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d5"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#2f8fef" text-anchor="middle">A</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d6"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ffb703" text-anchor="middle">S</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+
+
+  <div class="header">
+    <div class="escola">Estudos de Língua Portuguesa — 5º Ano</div>
+    <h1>📰 Prova de Português</h1>
+    <div class="sub">Tema: Gênero Textual — Reportagem</div>
+  </div>
+
+  <div class="dados-aluno">
+    <div>
+      <label for="nomeAluno">Nome do(a) aluno(a) *</label>
+      <input type="text" id="nomeAluno" placeholder="Digite seu nome completo">
+    </div>
+    <div>
+      <label for="turmaAluno">Turma</label>
+      <input type="text" id="turmaAluno" placeholder="Ex: 5º A">
+    </div>
+    <div>
+      <label for="dataProva">Data</label>
+      <input type="date" id="dataProva">
+    </div>
+  </div>
+
+  <div class="lock-msg" id="lockMsg">
+    🔒 Digite seu nome acima para liberar a prova.
+  </div>
+
+  <div class="progresso">
+    <span id="progressoTexto">0 de 0 respondidas</span>
+    <div class="progresso-barra"><div class="progresso-fill" id="progressoFill"></div></div>
+  </div>
+
+  <fieldset id="provaArea" disabled>
+
+    <div class="regra-box">
+      <h2>📘 Lembre-se</h2>
+      <p>A <strong>reportagem</strong> é um texto jornalístico cuja finalidade é informar. Ela pode aprofundar um tema atual ou não tão atual, desde que seja de interesse das pessoas, recorrendo a recursos como fotografias, pesquisas, entrevistas com especialistas, gráficos, ilustrações e levantamento de dados.</p>
+      <p>Ela pode ser divulgada em jornais impressos, digitais, na televisão, em sites ou em revistas. Mesmo parecendo neutra, a reportagem é construída a partir de uma perspectiva pessoal do jornalista, que pode deixar transparecer seu ponto de vista de forma implícita.</p>
+      <p>Em uma reportagem, é importante diferenciar <strong>fato</strong> (o que realmente ocorreu) de <strong>opinião</strong> (a interpretação subjetiva de alguém sobre esse fato). Frases entre aspas, atribuídas a entrevistados, costumam expressar opiniões pessoais sobre o assunto.</p>
+    </div>
+
+    <div class="bloco-titulo">Bloco 1 — Características da reportagem</div>
+    <div id="grupo1"></div>
+
+    <div class="bloco-titulo">Bloco 2 — Fato, opinião e confiabilidade das fontes</div>
+    <div id="grupo2"></div>
+
+    <div class="alerta-incompleto" id="alertaIncompleto"></div>
+    <button class="btn-corrigir" id="btnCorrigir">✅ Corrigir Prova</button>
+  </fieldset>
+
+  <div class="resultado" id="resultado">
+    <div class="nota" id="notaTexto"></div>
+    <div class="detalhe" id="detalheTexto"></div>
+    <div class="mensagem" id="mensagemTexto"></div>
+    <button class="btn-tentar-novo" id="btnTentarNovo">🔄 Tentar de Novo</button>
+  </div>
+
+</div>
+
+<script>
+const RELATORIO_URL = 'https://script.google.com/macros/s/AKfycbxhamE57npGq0b2YftOkxEXtNo22n-WBA5Dz5CDyRJa13OM5LgmcEsPrmeHL6gZKQVZnQ/exec';
+const TEMA_PROVA = 'Gênero Textual - Reportagem';
+
+function shuffle(array) {
+  const a = array.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const grupo1 = [
+  { q: "Qual é a finalidade principal de uma reportagem?", opts: ["Informar o leitor sobre um fato de interesse das pessoas", "Contar uma história de ficção", "Ensinar uma receita culinária", "Expressar sentimentos pessoais em forma de poema"], correct: 0 },
+  { q: "Uma reportagem pode aprofundar:", opts: ["Apenas temas extremamente recentes, do mesmo dia", "Tanto temas atuais quanto temas menos atuais, desde que sejam de interesse das pessoas", "Apenas assuntos esportivos", "Apenas fatos históricos antigos"], correct: 1 },
+  { q: "Quais recursos uma reportagem pode utilizar para enriquecer a informação?", opts: ["Apenas texto corrido, sem nenhum recurso visual", "Apenas desenhos de personagens fictícios", "Fotografias, pesquisas, entrevistas com especialistas e gráficos", "Apenas rimas e figuras de linguagem"], correct: 2 },
+  { q: "Em quais veículos uma reportagem pode ser divulgada?", opts: ["Somente em livros de literatura", "Somente em cartas pessoais", "Somente em diários íntimos", "Jornais impressos, digitais, televisão, sites ou revistas"], correct: 3 },
+  { q: "Qual é a função de incluir entrevistas com especialistas em uma reportagem?", opts: ["Trazer informações qualificadas e diferentes pontos de vista sobre o assunto", "Tornar o texto mais longo sem necessidade", "Substituir a necessidade de pesquisa", "Enfeitar o texto sem acrescentar informação"], correct: 0 },
+  { q: "O que diferencia a reportagem de outros textos jornalísticos como a notícia?", opts: ["A reportagem nunca pode ser publicada em jornais", "A reportagem aprofunda mais o tema e pode deixar transparecer, mesmo que implicitamente, o ponto de vista do jornalista", "A notícia é sempre mais longa que a reportagem", "Não existe diferença entre os dois gêneros"], correct: 1 },
+  { q: "Por que uma reportagem costuma usar aspas em determinados trechos?", opts: ["Para indicar o título da reportagem", "Para destacar palavras em outro idioma", "Para indicar uma citação direta da fala de uma fonte ou entrevistado", "Para indicar erro de digitação"], correct: 2 },
+  { q: "O que é um \"box\" dentro de uma reportagem?", opts: ["Uma caixa de papelão usada na ilustração", "Um erro comum de formatação", "Um tipo de letra utilizada no título", "Um quadro com informações complementares ao texto principal"], correct: 3 },
+  { q: "Qual é a importância do levantamento de dados em uma reportagem?", opts: ["Fornecer informações concretas que sustentam o assunto tratado", "Tornar o texto mais difícil de entender", "Substituir a necessidade de um título", "Diminuir a credibilidade do texto"], correct: 0 },
+  { q: "Uma reportagem é construída a partir de:", opts: ["Uma fórmula matemática fixa", "Uma perspectiva pessoal do jornalista, mesmo que o texto pareça neutro", "Apenas informações fornecidas pelo governo", "Uma estrutura idêntica em todos os veículos"], correct: 1 }
+];
+
+const grupo2 = [
+  { q: "O que é um fato, em uma reportagem?", opts: ["Uma opinião pessoal sobre um acontecimento", "Uma previsão sobre o futuro", "Algo que realmente ocorreu", "Uma figura de linguagem"], correct: 2 },
+  { q: "O que é uma opinião, em uma reportagem?", opts: ["Um dado estatístico comprovado", "Um fato histórico registrado", "Uma informação verificável por documentos", "A interpretação subjetiva que alguém tem sobre um fato"], correct: 3 },
+  { q: "Em uma reportagem, uma frase entre aspas atribuída a um especialista representa:", opts: ["A opinião desse especialista sobre o assunto", "Um erro de digitação do jornalista", "Um dado estatístico sem fonte", "Um título alternativo da reportagem"], correct: 0 },
+  { q: "Por que é importante avaliar de onde vem a fonte de uma reportagem?", opts: ["Porque todas as fontes são igualmente confiáveis", "Porque a confiabilidade da informação pode variar conforme o veículo de divulgação", "Porque isso não influencia a qualidade da informação", "Porque apenas fontes pagas são confiáveis"], correct: 1 },
+  { q: "Se duas reportagens de sites diferentes abordam o mesmo assunto com conclusões diferentes, isso mostra que:", opts: ["Uma das reportagens necessariamente está mentindo", "O assunto não pode ser tratado em reportagens", "Diferentes fontes podem apresentar pontos de vista distintos sobre o mesmo fato", "Reportagens nunca podem divergir entre si"], correct: 2 },
+  { q: "Qual é uma característica de um site especializado em determinado assunto (como educação ou tecnologia)?", opts: ["Nunca aborda temas relacionados à sua especialidade", "Sempre ignora opiniões de especialistas", "Costuma copiar reportagens de outros sites sem analisar", "Tende a abordar o tema com mais profundidade técnica naquela área específica"], correct: 3 },
+  { q: "Qual é a diferença entre um fato e uma opinião dentro de uma reportagem?", opts: ["O fato é uma informação verificável; a opinião é uma interpretação pessoal sobre esse fato", "Não existe diferença entre fato e opinião", "O fato é sempre uma opinião disfarçada", "A opinião é sempre mais confiável que o fato"], correct: 0 },
+  { q: "Em uma reportagem sobre tecnologia na educação, uma frase como \"o projeto distribuiu tablets para crianças\" representa:", opts: ["Uma opinião", "Um fato", "Uma figura de linguagem", "Um erro de informação"], correct: 1 },
+  { q: "Em uma reportagem sobre tecnologia na educação, uma frase como \"acho que esse tipo de aprendizado é limitado\" representa:", opts: ["Um fato comprovado por pesquisas", "Um dado estatístico", "Uma opinião", "Uma citação de lei"], correct: 2 },
+  { q: "Qual é uma boa prática ao ler diferentes reportagens sobre o mesmo tema?", opts: ["Acreditar apenas na primeira reportagem lida", "Ignorar reportagens de sites especializados", "Evitar comparar fontes diferentes", "Comparar as fontes e refletir sobre qual apresenta informação mais confiável"], correct: 3 }
+];
+
+let questionMap = [];
+let provaFinalizada = false;
+
+function renderGrupo(grupo, containerId, startNum) {
+  const container = document.getElementById(containerId);
+  const ordemEmbaralhada = shuffle(grupo.map((_, i) => i));
+  let num = startNum;
+
+  ordemEmbaralhada.forEach((origIndex) => {
+    const item = grupo[origIndex];
+    const optOrder = shuffle(item.opts.map((_, i) => i));
+    const newCorrectPos = optOrder.indexOf(item.correct);
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    const qId = 'q_' + num;
+
+    let optionsHtml = '';
+    optOrder.forEach((optIdx, pos) => {
+      optionsHtml += `
+        <label class="option" data-qid="${qId}" data-pos="${pos}">
+          <input type="radio" name="${qId}" value="${pos}" style="display:none">
+          <div class="letra">${String.fromCharCode(65 + pos)}</div>
+          <span class="txt">${item.opts[optIdx]}</span>
+        </label>`;
+    });
+
+    card.innerHTML = `
+      <span class="qnum">Questão ${num}</span>
+      <div class="qtext">${item.q}</div>
+      ${optionsHtml}
+    `;
+    container.appendChild(card);
+
+    questionMap.push({ qId: qId, correctPos: newCorrectPos, pergunta: item.q, opcoes: optOrder.map(idx => item.opts[idx]) });
+    num++;
+  });
+
+  return num;
+}
+
+let nextNum = 1;
+nextNum = renderGrupo(grupo1, 'grupo1', nextNum);
+nextNum = renderGrupo(grupo2, 'grupo2', nextNum);
+
+document.addEventListener('click', function(e) {
+  const label = e.target.closest('.option');
+  if (!label || provaFinalizada) return;
+  const qId = label.dataset.qid;
+  document.querySelectorAll(`.option[data-qid="${qId}"]`).forEach(o => o.classList.remove('selected'));
+  label.classList.add('selected');
+  const respondidas = new Set();
+  questionMap.forEach(item => {
+    if (document.querySelector(`input[name="${item.qId}"]:checked`)) respondidas.add(item.qId);
+  });
+  document.getElementById('progressoTexto').textContent = `${respondidas.size} de ${questionMap.length} respondidas`;
+  document.getElementById('progressoFill').style.width = `${(respondidas.size / questionMap.length) * 100}%`;
+});
+
+const nomeInput = document.getElementById('nomeAluno');
+const provaArea = document.getElementById('provaArea');
+const lockMsg = document.getElementById('lockMsg');
+
+function checkNome() {
+  if (nomeInput.value.trim().length > 0) {
+    provaArea.disabled = false;
+    lockMsg.classList.add('hidden');
+  } else {
+    provaArea.disabled = true;
+    lockMsg.classList.remove('hidden');
+  }
+}
+nomeInput.addEventListener('input', checkNome);
+checkNome();
+
+document.getElementById('btnCorrigir').addEventListener('click', function() {
+  const alerta = document.getElementById('alertaIncompleto');
+  const naoRespondidas = [];
+
+  questionMap.forEach((item, idx) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    if (!checked) naoRespondidas.push(idx + 1);
+  });
+
+  if (naoRespondidas.length > 0) {
+    alerta.textContent = `⚠️ Você ainda não respondeu ${naoRespondidas.length === 1 ? 'a questão' : 'as questões'}: ${naoRespondidas.join(', ')}. Responda tudo antes de corrigir.`;
+    alerta.classList.add('show');
+    return;
+  }
+  alerta.classList.remove('show');
+
+  provaFinalizada = true;
+  let acertos = 0;
+  questionMap.forEach((item) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    const selectedPos = checked ? parseInt(checked.value) : -1;
+    const acertou = selectedPos === item.correctPos;
+    if (acertou) acertos++;
+
+    const card = document.querySelector(`.option[data-qid="${item.qId}"]`).closest('.question-card');
+    card.querySelectorAll('.option').forEach((opt) => {
+      const pos = parseInt(opt.dataset.pos);
+      opt.querySelectorAll('input').forEach(inp => inp.disabled = true);
+      if (pos === item.correctPos) opt.classList.add('resposta-correta');
+      if (pos === selectedPos && !acertou) opt.classList.add('resposta-incorreta');
+    });
+    const qnumEl = card.querySelector('.qnum');
+    qnumEl.innerHTML += acertou ? ' ✅' : ' ❌';
+  });
+
+  const total = questionMap.length;
+  const nota = (acertos / total) * 10;
+  const pct = Math.round((acertos / total) * 100);
+
+  const notaEl = document.getElementById('notaTexto');
+  const detalheEl = document.getElementById('detalheTexto');
+  const mensagemEl = document.getElementById('mensagemTexto');
+
+  notaEl.textContent = `${acertos} / ${total}`;
+  detalheEl.textContent = `Nota: ${nota.toFixed(1)} (${pct}% de aproveitamento)`;
+
+  notaEl.className = 'nota';
+  mensagemEl.className = 'mensagem';
+
+  if (nota >= 9) {
+    notaEl.classList.add('nota-excelente');
+    mensagemEl.classList.add('msg-excelente');
+    mensagemEl.textContent = '🎉 Excelente! Parabéns!';
+  } else if (nota >= 7) {
+    notaEl.classList.add('nota-bom');
+    mensagemEl.classList.add('msg-bom');
+    mensagemEl.textContent = '👏 Muito bem! Estamos quase lá!';
+  } else if (nota >= 5) {
+    notaEl.classList.add('nota-atencao');
+    mensagemEl.classList.add('msg-atencao');
+    mensagemEl.textContent = '💪 Não desista! Você consegue melhorar!';
+  } else {
+    notaEl.classList.add('nota-baixa');
+    mensagemEl.classList.add('msg-baixa');
+    mensagemEl.textContent = '🤗 Sem problemas! Vamos praticar mais esse tema juntos?';
+  }
+
+  document.getElementById('resultado').classList.add('show');
+  document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+
+  const respostasDetalhe = questionMap.map((item, idx) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    const selectedPos = checked ? parseInt(checked.value) : -1;
+    return {
+      numero: idx + 1,
+      pergunta: item.pergunta,
+      resposta_aluno: selectedPos >= 0 ? item.opcoes[selectedPos] : '',
+      resposta_correta: item.opcoes[item.correctPos],
+      acertou: selectedPos === item.correctPos
+    };
+  });
+
+  fetch(RELATORIO_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      nome: nomeInput.value.trim(),
+      turma: document.getElementById('turmaAluno').value.trim(),
+      tema: TEMA_PROVA,
+      nota: nota.toFixed(1),
+      respostas: respostasDetalhe
+    })
+  }).catch(function(err) { console.error('Erro ao enviar relatório:', err); });
+});
+
+document.getElementById('btnTentarNovo').addEventListener('click', function() {
+  location.reload();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prova de Português — 5º Ano — Grau Superlativo do Adjetivo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif; font-weight: 600; min-height: 100vh; padding: 2rem 4vw;
+    background: #fdf8ee;
+    background-image: repeating-linear-gradient(#fdf8ee 0 31px, #e8dfc8 31px 32px);
+    color: #4a3a2a;
+  }
+  .container { width: 100%; max-width: none; margin: 0; position: relative; }
+
+  .header {
+    background: #ff8c42; border-radius: 18px 18px 4px 4px; padding: 1.5rem 2rem; margin-bottom: 1.5rem;
+    text-align: center; position: relative; transform: rotate(-0.5deg);
+    box-shadow: 3px 4px 0 rgba(0,0,0,0.08);
+  }
+  .header::after {
+    content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    width: 90px; height: 22px; background: #ffe5cc; opacity: 0.8; border-radius: 2px;
+  }
+  .header .escola { font-size: 14px; letter-spacing: 1px; color: #4a1b0c; font-weight: 800; }
+  .header h1 { font-family: 'Patrick Hand', cursive; font-size: 38px; color: #4a1b0c; margin: 6px 0; }
+  .header .sub { font-size: 17px; font-weight: 700; color: #5a2a0c; }
+
+  .dados-aluno {
+    background: #fff; border: 2px dashed #ff8c42; border-radius: 16px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;
+  }
+  .dados-aluno label { font-family: 'Patrick Hand', cursive; font-size: 16px; color: #06a77d; display: block; margin-bottom: 4px; }
+  .dados-aluno input {
+    width: 100%; padding: 10px 12px; border: 2px solid #f0e6d2; border-radius: 10px;
+    background: #fffdf7; font-size: 16px; font-weight: 700; font-family: inherit; outline: none; color: #4a3a2a;
+  }
+  .dados-aluno input:focus { border-color: #06a77d; }
+
+  .lock-msg {
+    background: #fff3cd; color: #7a5b00; border-radius: 12px; padding: 12px 16px;
+    margin-bottom: 1.25rem; font-size: 16px; font-weight: 700; text-align: center;
+    border: 2px solid #ffe69c;
+  }
+  .lock-msg.hidden { display: none; }
+
+  .progresso {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;
+    background: #fff; border-radius: 16px; padding: 10px 18px; border: 2px solid #ffe5cc;
+  }
+  .progresso-barra { flex: 1; height: 12px; background: #f0e6d2; border-radius: 10px; overflow: hidden; }
+  .progresso-fill { width: 0%; height: 100%; background: #06a77d; border-radius: 10px; transition: width 0.2s; }
+  .progresso span { font-family: 'Patrick Hand', cursive; font-size: 17px; color: #06a77d; white-space: nowrap; }
+
+  fieldset#provaArea { border: none; }
+  fieldset#provaArea[disabled] { opacity: 0.4; pointer-events: none; }
+
+  .regra-box, .texto-box {
+    background: #fff; border-left: 6px solid #06a77d; border-radius: 16px;
+    padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; box-shadow: 2px 3px 0 rgba(0,0,0,0.05);
+  }
+  .regra-box h2, .texto-box h2 { font-family: 'Patrick Hand', cursive; font-size: 23px; color: #06a77d; margin-bottom: 10px; }
+  .regra-box p, .texto-box p { font-size: 17px; font-weight: 700; line-height: 1.7; color: #4a3a2a; margin-bottom: 8px; }
+  .regra-box p + p, .texto-box p + p { margin-top: 8px; }
+  .regra-box table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+  .regra-box table th, .regra-box table td { border: 1px solid #f0e6d2; padding: 6px 10px; text-align: left; }
+  .regra-box table th { background: #fff3e3; color: #ff8c42; }
+
+  .bloco-titulo {
+    font-family: 'Patrick Hand', cursive; font-size: 24px; color: #ef476f;
+    margin: 1.5rem 0 0.75rem; padding-left: 4px;
+  }
+
+  .question-card {
+    background: #fff; border-radius: 18px; padding: 1.5rem; position: relative;
+    box-shadow: 2px 4px 0 rgba(0,0,0,0.06); border: 2px solid #f0e6d2; margin-bottom: 1rem;
+  }
+  .qnum {
+    display: inline-block; background: #ef476f; color: #fff; font-family: 'Patrick Hand', cursive;
+    font-size: 16px; padding: 4px 14px; border-radius: 20px; margin-bottom: 10px; transform: rotate(-2deg);
+  }
+  .qtext { font-size: 20px; font-weight: 800; line-height: 1.4; margin-bottom: 16px; color: #4a3a2a; }
+  .option {
+    display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px;
+    margin-bottom: 8px; background: #fffdf7; border: 2px solid #f0e6d2; cursor: pointer;
+  }
+  .option:hover { border-color: #06a77d; }
+  .option.selected { background: #e1f5ee; border-color: #06a77d; }
+  .option.resposta-correta { background: #d7f5e3 !important; border-color: #06a77d !important; }
+  .option.resposta-correta .letra { background: #06a77d; color: #fff; }
+  .option.resposta-incorreta { background: #ffe1e8 !important; border-color: #ef476f !important; }
+  .option.resposta-incorreta .letra { background: #ef476f; color: #fff; }
+  .letra {
+    width: 46px; height: 46px; border-radius: 12px; background: #ff8c42; display: flex;
+    align-items: center; justify-content: center; font-family: 'Baloo 2', sans-serif; font-size: 24px;
+    font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .option span.txt { font-size: 17.5px; font-weight: 700; line-height: 1.4; }
+
+  .btn-corrigir {
+    display: block; width: 100%; padding: 18px; margin: 1.5rem 0;
+    background: #ef476f; color: #fff; border: none; border-radius: 16px; font-size: 21px; font-weight: 800;
+    font-family: 'Patrick Hand', cursive; cursor: pointer; box-shadow: 0 5px 0 #b22d4d; transition: transform 0.1s;
+  }
+  .btn-corrigir:hover { transform: translateY(2px); box-shadow: 0 3px 0 #b22d4d; }
+
+  .btn-tentar-novo {
+    display: inline-block; margin-top: 18px; padding: 12px 26px;
+    background: #2f8fef; color: #fff; border: none; border-radius: 14px; font-size: 16px; font-weight: 800;
+    font-family: 'Patrick Hand', cursive; cursor: pointer; box-shadow: 0 4px 0 #1c5fa8; transition: transform 0.1s;
+  }
+  .btn-tentar-novo:hover { transform: translateY(2px); box-shadow: 0 2px 0 #1c5fa8; }
+
+  .resultado {
+    background: #fff; border-radius: 20px; padding: 2rem; text-align: center;
+    margin-bottom: 1.5rem; box-shadow: 2px 4px 0 rgba(0,0,0,0.08); border: 2px solid #f0e6d2; display: none;
+  }
+  .resultado.show { display: block; }
+  .resultado .nota { font-family: 'Patrick Hand', cursive; font-size: 48px; font-weight: 700; margin-bottom: 6px; }
+  .resultado .detalhe { font-size: 17px; font-weight: 700; color: #6a5a4a; margin-bottom: 14px; }
+  .resultado .mensagem { font-size: 23px; font-weight: 700; padding: 16px; border-radius: 14px; font-family: 'Patrick Hand', cursive; }
+
+  .nota-excelente { color: #06a77d; }
+  .nota-bom { color: #2f8fef; }
+  .nota-atencao { color: #ffb703; }
+  .nota-baixa { color: #ef476f; }
+  .msg-excelente { background: #e1f5ee; color: #06a77d; }
+  .msg-bom { background: #e6f1fb; color: #2f8fef; }
+  .msg-atencao { background: #fff3cd; color: #92400e; }
+  .msg-baixa { background: #ffe1e8; color: #ef476f; }
+
+  .alerta-incompleto {
+    background: #ffe1e8; color: #ef476f; border-radius: 12px; padding: 12px 16px;
+    margin: 1rem 0; font-size: 16px; font-weight: 700; text-align: center; display: none;
+  }
+  .alerta-incompleto.show { display: block; }
+
+  .sticker { position: absolute; top: -12px; right: -8px; font-size: 26px; transform: rotate(12deg); }
+
+  .doodle { position: absolute; pointer-events: none; z-index: 5; filter: drop-shadow(1px 3px 2px rgba(0,0,0,0.12)); }
+  .d1 { left: -50px; top: -10px; transform: rotate(-4deg); }
+  .d2 { right: -50px; top: 6px; transform: rotate(4deg); }
+  .d3 { left: -52px; top: 178px; transform: rotate(5deg); }
+  .d4 { right: -50px; top: 272px; transform: rotate(-5deg); }
+  .d5 { left: -50px; top: 412px; transform: rotate(3deg); }
+  .d6 { right: -48px; top: 600px; transform: rotate(-4deg); }
+  @media (max-width: 980px) { .doodle { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="doodle d1"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#06a77d" text-anchor="middle">L</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d2"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ff8c42" text-anchor="middle">E</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d3"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ef476f" text-anchor="middle">T</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d4"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#7c5cff" text-anchor="middle">R</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d5"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#2f8fef" text-anchor="middle">A</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d6"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ffb703" text-anchor="middle">S</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+
+
+  <div class="header">
+    <div class="escola">Estudos de Língua Portuguesa — 5º Ano</div>
+    <h1>📖 Prova de Português</h1>
+    <div class="sub">Tema: Grau Superlativo do Adjetivo (Analítico/Sintético)</div>
+  </div>
+
+  <div class="dados-aluno">
+    <div>
+      <label for="nomeAluno">Nome do(a) aluno(a) *</label>
+      <input type="text" id="nomeAluno" placeholder="Digite seu nome completo">
+    </div>
+    <div>
+      <label for="turmaAluno">Turma</label>
+      <input type="text" id="turmaAluno" placeholder="Ex: 5º A">
+    </div>
+    <div>
+      <label for="dataProva">Data</label>
+      <input type="date" id="dataProva">
+    </div>
+  </div>
+
+  <div class="lock-msg" id="lockMsg">
+    🔒 Digite seu nome acima para liberar a prova.
+  </div>
+
+  <div class="progresso">
+    <span id="progressoTexto">0 de 0 respondidas</span>
+    <div class="progresso-barra"><div class="progresso-fill" id="progressoFill"></div></div>
+  </div>
+
+  <fieldset id="provaArea" disabled>
+
+    <div class="regra-box">
+      <h2>📘 Lembre-se</h2>
+      <p>O <strong>grau superlativo</strong> indica uma característica do adjetivo em seu grau máximo. Ele pode ser formado de duas maneiras:</p>
+      <p><strong>Superlativo absoluto analítico:</strong> usa-se uma palavra ao lado do adjetivo, como "muito", "mais" ou "extremamente". Exemplo: <em>muito importante</em>.</p>
+      <p><strong>Superlativo absoluto sintético:</strong> acrescenta-se um sufixo ao próprio adjetivo, como -íssimo, -bilíssimo, -císsimo, -imo ou -níssimo. Exemplo: <em>importantíssimo</em>.</p>
+      <p>Alguns adjetivos têm formas sintéticas irregulares:</p>
+      <table>
+        <tr><th>Adjetivo</th><th>Superlativo sintético</th></tr>
+        <tr><td>Fácil</td><td>Facílimo</td></tr>
+        <tr><td>Difícil</td><td>Dificílimo</td></tr>
+        <tr><td>Amável</td><td>Amabilíssimo</td></tr>
+        <tr><td>Agradável</td><td>Agradabilíssimo</td></tr>
+        <tr><td>Doce</td><td>Dulcíssimo</td></tr>
+        <tr><td>Horrível</td><td>Horribilíssimo</td></tr>
+        <tr><td>Feliz</td><td>Felicíssimo</td></tr>
+        <tr><td>Frio</td><td>Frigidíssimo</td></tr>
+        <tr><td>Frágil</td><td>Fragílimo</td></tr>
+        <tr><td>Nobre</td><td>Nobilíssimo</td></tr>
+      </table>
+      <p style="margin-top:8px;">Os adjetivos <strong>bom, mau, grande</strong> e <strong>pequeno</strong> também têm formas especiais: no lugar de "mais bom" usamos <strong>melhor</strong>; no lugar de "mais mau", <strong>pior</strong>; no lugar de "mais grande", <strong>maior</strong>; e no lugar de "mais pequeno", <strong>menor</strong>.</p>
+    </div>
+
+    <div class="bloco-titulo">Bloco 1 — Conceito e formação regular</div>
+    <div id="grupo1"></div>
+
+    <div class="bloco-titulo">Bloco 2 — Formações irregulares e especiais</div>
+    <div id="grupo2"></div>
+
+    <div class="alerta-incompleto" id="alertaIncompleto"></div>
+    <button class="btn-corrigir" id="btnCorrigir">✅ Corrigir Prova</button>
+  </fieldset>
+
+  <div class="resultado" id="resultado">
+    <div class="nota" id="notaTexto"></div>
+    <div class="detalhe" id="detalheTexto"></div>
+    <div class="mensagem" id="mensagemTexto"></div>
+    <button class="btn-tentar-novo" id="btnTentarNovo">🔄 Tentar de Novo</button>
+  </div>
+
+</div>
+
+<script>
+const RELATORIO_URL = 'https://script.google.com/macros/s/AKfycbxhamE57npGq0b2YftOkxEXtNo22n-WBA5Dz5CDyRJa13OM5LgmcEsPrmeHL6gZKQVZnQ/exec';
+const TEMA_PROVA = 'Grau Superlativo do Adjetivo';
+
+function shuffle(array) {
+  const a = array.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const grupo1 = [
+  { q: "O que indica o grau superlativo do adjetivo?", opts: ["Uma característica no seu grau máximo", "Comparação entre duas coisas iguais", "Diminutivo de um substantivo", "Plural de um adjetivo"], correct: 0 },
+  { q: "O grau superlativo absoluto analítico é formado:", opts: ["Acrescentando um sufixo ao final do adjetivo", "Usando palavras como \"muito\", \"mais\" ou \"extremamente\" ao lado do adjetivo", "Repetindo o adjetivo duas vezes", "Trocando o adjetivo por um substantivo"], correct: 1 },
+  { q: "O grau superlativo absoluto sintético é formado:", opts: ["Usando duas palavras separadas, como \"muito bonito\"", "Colocando um artigo antes do adjetivo", "Acrescentando um sufixo ao adjetivo, como -íssimo", "Usando o diminutivo do adjetivo"], correct: 2 },
+  { q: "Qual é a forma sintética do superlativo de \"precioso\"?", opts: ["Muito precioso", "Precioso mais", "Preciosável", "Preciosíssimo"], correct: 3 },
+  { q: "Qual é a forma sintética do superlativo de \"importante\"?", opts: ["Importantíssimo", "Muito importante", "Importantável", "Importantudo"], correct: 0 },
+  { q: "Na frase \"A água é o nosso bem mais precioso\", a expressão \"mais precioso\" está no grau:", opts: ["Superlativo absoluto sintético", "Superlativo absoluto analítico", "Comparativo de igualdade", "Grau normal do adjetivo"], correct: 1 },
+  { q: "Qual é a forma sintética do superlativo de \"lindo\"?", opts: ["Lindável", "Lindérrimo", "Lindíssimo", "Mais lindo"], correct: 2 },
+  { q: "Qual é a forma sintética do superlativo de \"fácil\"?", opts: ["Facilíssimo", "Muito fácil", "Facilmente", "Facílimo"], correct: 3 },
+  { q: "Qual é a forma sintética do superlativo de \"difícil\"?", opts: ["Dificílimo", "Dificultíssimo", "Muito difícil", "Difícilzão"], correct: 0 }
+];
+
+const grupo2 = [
+  { q: "A partir de qual adjetivo foi formado o superlativo \"agradabilíssimo\"?", opts: ["Agradar", "Agradável", "Agrado", "Agradecido"], correct: 1 },
+  { q: "A partir de qual adjetivo foi formado o superlativo \"dulcíssimo\"?", opts: ["Dulce", "Adocicado", "Doce", "Dócil"], correct: 2 },
+  { q: "A partir de qual adjetivo foi formado o superlativo \"horribilíssimo\"?", opts: ["Horror", "Horrendo", "Horripilante", "Horrível"], correct: 3 },
+  { q: "Qual é a forma sintética do superlativo de \"feliz\"?", opts: ["Felicíssimo", "Felizíssimo", "Muito feliz", "Felicitíssimo"], correct: 0 },
+  { q: "Qual é a forma sintética do superlativo de \"frio\"?", opts: ["Friíssimo", "Frigidíssimo", "Muito frio", "Frioríssimo"], correct: 1 },
+  { q: "Qual é a forma sintética do superlativo de \"frágil\"?", opts: ["Fragilíssimo", "Muito frágil", "Fragílimo", "Fragilzinho"], correct: 2 },
+  { q: "Qual é a forma sintética do superlativo de \"nobre\"?", opts: ["Nobríssimo", "Muito nobre", "Nobrezíssimo", "Nobilíssimo"], correct: 3 },
+  { q: "Qual é a forma sintética do superlativo de \"amável\"?", opts: ["Amabilíssimo", "Amavelíssimo", "Muito amável", "Amorzíssimo"], correct: 0 },
+  { q: "No lugar de \"mais bom\", a gramática indica o uso de:", opts: ["Bonzíssimo", "Melhor", "Ótimo", "Boníssimo"], correct: 1 },
+  { q: "No lugar de \"mais mau\", a gramática indica o uso de:", opts: ["Maus", "Malíssimo", "Pior", "Péssimo"], correct: 2 },
+  { q: "No lugar de \"mais grande\" e \"mais pequeno\", usamos respectivamente:", opts: ["Grandíssimo e pequeníssimo", "Máximo e mínimo", "Enorme e minúsculo", "Maior e menor"], correct: 3 }
+];
+
+let questionMap = [];
+let provaFinalizada = false;
+
+function renderGrupo(grupo, containerId, startNum) {
+  const container = document.getElementById(containerId);
+  const ordemEmbaralhada = shuffle(grupo.map((_, i) => i));
+  let num = startNum;
+
+  ordemEmbaralhada.forEach((origIndex) => {
+    const item = grupo[origIndex];
+    const optOrder = shuffle(item.opts.map((_, i) => i));
+    const newCorrectPos = optOrder.indexOf(item.correct);
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    const qId = 'q_' + num;
+
+    let optionsHtml = '';
+    optOrder.forEach((optIdx, pos) => {
+      optionsHtml += `
+        <label class="option" data-qid="${qId}" data-pos="${pos}">
+          <input type="radio" name="${qId}" value="${pos}" style="display:none">
+          <div class="letra">${String.fromCharCode(65 + pos)}</div>
+          <span class="txt">${item.opts[optIdx]}</span>
+        </label>`;
+    });
+
+    card.innerHTML = `
+      <span class="qnum">Questão ${num}</span>
+      <div class="qtext">${item.q}</div>
+      ${optionsHtml}
+    `;
+    container.appendChild(card);
+
+    questionMap.push({ qId: qId, correctPos: newCorrectPos, pergunta: item.q, opcoes: optOrder.map(idx => item.opts[idx]) });
+    num++;
+  });
+
+  return num;
+}
+
+let nextNum = 1;
+nextNum = renderGrupo(grupo1, 'grupo1', nextNum);
+nextNum = renderGrupo(grupo2, 'grupo2', nextNum);
+
+document.addEventListener('click', function(e) {
+  const label = e.target.closest('.option');
+  if (!label || provaFinalizada) return;
+  const qId = label.dataset.qid;
+  document.querySelectorAll(`.option[data-qid="${qId}"]`).forEach(o => o.classList.remove('selected'));
+  label.classList.add('selected');
+  const respondidas = new Set();
+  questionMap.forEach(item => {
+    if (document.querySelector(`input[name="${item.qId}"]:checked`)) respondidas.add(item.qId);
+  });
+  document.getElementById('progressoTexto').textContent = `${respondidas.size} de ${questionMap.length} respondidas`;
+  document.getElementById('progressoFill').style.width = `${(respondidas.size / questionMap.length) * 100}%`;
+});
+
+const nomeInput = document.getElementById('nomeAluno');
+const provaArea = document.getElementById('provaArea');
+const lockMsg = document.getElementById('lockMsg');
+
+function checkNome() {
+  if (nomeInput.value.trim().length > 0) {
+    provaArea.disabled = false;
+    lockMsg.classList.add('hidden');
+  } else {
+    provaArea.disabled = true;
+    lockMsg.classList.remove('hidden');
+  }
+}
+nomeInput.addEventListener('input', checkNome);
+checkNome();
+
+document.getElementById('btnCorrigir').addEventListener('click', function() {
+  const alerta = document.getElementById('alertaIncompleto');
+  const naoRespondidas = [];
+
+  questionMap.forEach((item, idx) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    if (!checked) naoRespondidas.push(idx + 1);
+  });
+
+  if (naoRespondidas.length > 0) {
+    alerta.textContent = `⚠️ Você ainda não respondeu ${naoRespondidas.length === 1 ? 'a questão' : 'as questões'}: ${naoRespondidas.join(', ')}. Responda tudo antes de corrigir.`;
+    alerta.classList.add('show');
+    return;
+  }
+  alerta.classList.remove('show');
+
+  provaFinalizada = true;
+  let acertos = 0;
+  questionMap.forEach((item) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    const selectedPos = checked ? parseInt(checked.value) : -1;
+    const acertou = selectedPos === item.correctPos;
+    if (acertou) acertos++;
+
+    const card = document.querySelector(`.option[data-qid="${item.qId}"]`).closest('.question-card');
+    card.querySelectorAll('.option').forEach((opt) => {
+      const pos = parseInt(opt.dataset.pos);
+      opt.querySelectorAll('input').forEach(inp => inp.disabled = true);
+      if (pos === item.correctPos) opt.classList.add('resposta-correta');
+      if (pos === selectedPos && !acertou) opt.classList.add('resposta-incorreta');
+    });
+    const qnumEl = card.querySelector('.qnum');
+    qnumEl.innerHTML += acertou ? ' ✅' : ' ❌';
+  });
+
+  const total = questionMap.length;
+  const nota = (acertos / total) * 10;
+  const pct = Math.round((acertos / total) * 100);
+
+  const notaEl = document.getElementById('notaTexto');
+  const detalheEl = document.getElementById('detalheTexto');
+  const mensagemEl = document.getElementById('mensagemTexto');
+
+  notaEl.textContent = `${acertos} / ${total}`;
+  detalheEl.textContent = `Nota: ${nota.toFixed(1)} (${pct}% de aproveitamento)`;
+
+  notaEl.className = 'nota';
+  mensagemEl.className = 'mensagem';
+
+  if (nota >= 9) {
+    notaEl.classList.add('nota-excelente');
+    mensagemEl.classList.add('msg-excelente');
+    mensagemEl.textContent = '🎉 Excelente! Parabéns!';
+  } else if (nota >= 7) {
+    notaEl.classList.add('nota-bom');
+    mensagemEl.classList.add('msg-bom');
+    mensagemEl.textContent = '👏 Muito bem! Estamos quase lá!';
+  } else if (nota >= 5) {
+    notaEl.classList.add('nota-atencao');
+    mensagemEl.classList.add('msg-atencao');
+    mensagemEl.textContent = '💪 Não desista! Você consegue melhorar!';
+  } else {
+    notaEl.classList.add('nota-baixa');
+    mensagemEl.classList.add('msg-baixa');
+    mensagemEl.textContent = '🤗 Sem problemas! Vamos praticar mais esse tema juntos?';
+  }
+
+  document.getElementById('resultado').classList.add('show');
+  document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+
+  const respostasDetalhe = questionMap.map((item, idx) => {
+    const checked = document.querySelector(`input[name="${item.qId}"]:checked`);
+    const selectedPos = checked ? parseInt(checked.value) : -1;
+    return {
+      numero: idx + 1,
+      pergunta: item.pergunta,
+      resposta_aluno: selectedPos >= 0 ? item.opcoes[selectedPos] : '',
+      resposta_correta: item.opcoes[item.correctPos],
+      acertou: selectedPos === item.correctPos
+    };
+  });
+
+  fetch(RELATORIO_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      nome: nomeInput.value.trim(),
+      turma: document.getElementById('turmaAluno').value.trim(),
+      tema: TEMA_PROVA,
+      nota: nota.toFixed(1),
+      respostas: respostasDetalhe
+    })
+  }).catch(function(err) { console.error('Erro ao enviar relatório:', err); });
+});
+
+document.getElementById('btnTentarNovo').addEventListener('click', function() {
+  location.reload();
+});
+</script>
+</body>
+</html>

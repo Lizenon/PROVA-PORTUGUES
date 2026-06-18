@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Provas — Português 5º Ano</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif; font-weight: 600; min-height: 100vh; padding: 2rem 4vw;
+    background: #fdf8ee;
+    background-image: repeating-linear-gradient(#fdf8ee 0 31px, #e8dfc8 31px 32px);
+    color: #4a3a2a;
+  }
+  .container { width: 100%; max-width: none; margin: 0; position: relative; }
+
+  .header {
+    background: #ff8c42; border-radius: 18px 18px 4px 4px; padding: 2rem 2.5rem; margin-bottom: 1.75rem;
+    text-align: center; position: relative; transform: rotate(-0.3deg);
+    box-shadow: 3px 4px 0 rgba(0,0,0,0.08);
+  }
+  .header::after {
+    content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    width: 100px; height: 22px; background: #ffe5cc; opacity: 0.8; border-radius: 2px;
+  }
+  .header .escola { font-size: 14px; letter-spacing: 1px; color: #4a1b0c; font-weight: 800; }
+  .header h1 { font-family: 'Patrick Hand', cursive; font-size: 42px; color: #4a1b0c; margin: 8px 0 4px; }
+  .header .sub { font-size: 16px; font-weight: 700; color: #5a2a0c; margin-bottom: 10px; }
+  .header .contagem {
+    display: inline-block; background: #fff; color: #ff8c42; font-family: 'Patrick Hand', cursive;
+    font-size: 16px; padding: 6px 18px; border-radius: 20px; margin-top: 6px;
+  }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;
+  }
+
+  .card {
+    background: #fff; border-radius: 18px; padding: 1.5rem; position: relative;
+    box-shadow: 2px 4px 0 rgba(0,0,0,0.06); border: 2px solid #f0e6d2; display: flex; flex-direction: column;
+  }
+
+  .card .topo { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .card .numero {
+    width: 38px; height: 38px; border-radius: 50%; background: #ef476f; color: #fff;
+    display: flex; align-items: center; justify-content: center; font-family: 'Patrick Hand', cursive;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .card .titulo { font-family: 'Patrick Hand', cursive; font-size: 20px; color: #4a3a2a; line-height: 1.2; }
+  .card .descricao { font-size: 14.5px; font-weight: 600; color: #6a5a4a; margin-bottom: 16px; flex-grow: 1; }
+
+  .botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    flex: 1; min-width: 130px; text-align: center; padding: 11px 14px; border-radius: 12px;
+    font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 700; text-decoration: none;
+    cursor: pointer; transition: transform 0.1s; border: none;
+  }
+  .btn-prova { background: #06a77d; color: #fff; box-shadow: 0 4px 0 #04684f; }
+  .btn-prova:hover { transform: translateY(2px); box-shadow: 0 2px 0 #04684f; }
+  .btn-mapa { background: #2f8fef; color: #fff; box-shadow: 0 4px 0 #1c5fa8; }
+  .btn-mapa:hover { transform: translateY(2px); box-shadow: 0 2px 0 #1c5fa8; }
+
+  .doodle { position: absolute; pointer-events: none; z-index: 5; filter: drop-shadow(1px 3px 2px rgba(0,0,0,0.12)); }
+  .d1 { left: -50px; top: -10px; transform: rotate(-4deg); }
+  .d2 { right: -50px; top: 6px; transform: rotate(4deg); }
+  @media (max-width: 980px) { .doodle { display: none; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="doodle d1"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#06a77d" text-anchor="middle">L</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+  <div class="doodle d2"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ffb703" text-anchor="middle">S</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+
+  <div class="header">
+    <div class="escola">PORTAL DE PROVAS — PORTUGUÊS</div>
+    <h1>📒 Caderno Divertido</h1>
+    <div class="sub">5º Ano · Língua Portuguesa</div>
+    <div class="contagem">6 provas · 6 mapas mentais</div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="topo"><div class="numero">1</div><div class="titulo">Interpretação Textual</div></div>
+      <div class="descricao">Discurso direto e indireto, inferência, fato x opinião e reconhecimento do gênero do texto.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova1_interpretacao_textual.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_1_interpretacao_textual.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topo"><div class="numero">2</div><div class="titulo">Grau Superlativo do Adjetivo</div></div>
+      <div class="descricao">Formas analítica e sintética do superlativo absoluto, sufixos especiais e exceções.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova2_grau_superlativo.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_2_grau_superlativo.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topo"><div class="numero">3</div><div class="titulo">Ortografia</div></div>
+      <div class="descricao">Mas, mais, mal, mau, onde e aonde: quando usar cada um corretamente.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova3_ortografia.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_3_ortografia.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topo"><div class="numero">4</div><div class="titulo">Gênero Textual — Cartaz</div></div>
+      <div class="descricao">Linguagem verbal e não verbal, frases de efeito e diferença entre cartaz, notícia e carta pessoal.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova4_cartaz.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_4_cartaz.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topo"><div class="numero">5</div><div class="titulo">Gênero Textual — Narrativa de Suspense</div></div>
+      <div class="descricao">Narrador-personagem x observador, discurso direto e indireto, estrutura da narrativa.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova5_narrativa_suspense.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_5_narrativa_suspense.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topo"><div class="numero">6</div><div class="titulo">Gênero Textual — Reportagem</div></div>
+      <div class="descricao">Características da reportagem, fato x opinião e confiabilidade das fontes.</div>
+      <div class="botoes">
+        <a class="btn btn-prova" href="port_prova6_reportagem.html">📝 Iniciar Prova</a>
+        <a class="btn btn-mapa" href="mapa_mental_6_reportagem.png" target="_blank">🗺️ Mapa Mental</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
