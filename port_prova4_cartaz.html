@@ -442,6 +442,7 @@ const G2 = [
    ============================================================ */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhamE57npGq0b2YftOkxEXtNo22n-WBA5Dz5CDyRJa13OM5LgmcEsPrmeHL6gZKQVZnQ/exec";
 const NOME_PROVA = "port_prova4_cartaz";
+const TEMA = "Gênero Textual — Cartaz";
 const ACCENTS   = ['#8b7bff','#4dd2ff','#ff9f43','#ff6fae','#b8f73d'];
 const LETRAS    = ["A","B","C","D"];
 
@@ -611,18 +612,26 @@ async function enviarProva(){
 
   const TODAS=[...Q1,...Q2];
   let acertos=0;
-  const respostas={};
+  const respostasDetalhadas=[];
 
   TODAS.forEach((q,i)=>{
     const sel=parseInt(document.querySelector(`input[name="q${i}"]:checked`).value);
     const card=document.getElementById(`card${i}`);
     const fb=document.getElementById(`fb${i}`);
-    respostas[`q${i+1}`]=LETRAS[sel];
+    const acertou = sel===q.g;
+
+    respostasDetalhadas.push({
+      numero: i+1,
+      pergunta: q.p,
+      resposta_aluno: q.a[sel],
+      resposta_correta: q.a[q.g],
+      acertou: acertou
+    });
 
     card.querySelectorAll('.alt').forEach(el=>el.classList.add('bloqueada'));
     card.querySelectorAll('input[type=radio]').forEach(el=>el.disabled=true);
 
-    if(sel===q.g){
+    if(acertou){
       acertos++;
       card.classList.add('correta');
       document.getElementById(`alt${i}_${sel}`).classList.add('gabarito');
@@ -662,15 +671,16 @@ async function enviarProva(){
   document.getElementById('hint-txt').textContent='Prova corrigida! Role para ver o gabarito em cada questão.';
 
   try {
+    const notaPonto = ((acertos/TOTAL)*10).toFixed(1); // formato com ponto, para o Apps Script
     await fetch(SCRIPT_URL,{
       method:'POST', mode:'no-cors',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        nome, turma, data,
-        prova:NOME_PROVA,
-        acertos, erros, total:TOTAL, nota,
-        respostas:JSON.stringify(respostas),
-        timestamp:new Date().toLocaleString('pt-BR')
+        nome: nome,
+        turma: turma,
+        tema: TEMA,
+        nota: notaPonto,
+        respostas: respostasDetalhadas
       })
     });
   } catch(e){ console.warn('Erro ao enviar:', e); }
