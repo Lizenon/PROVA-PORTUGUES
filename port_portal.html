@@ -4,84 +4,124 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal de Provas — Português 5º Ano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Nunito', sans-serif; font-weight: 600; min-height: 100vh; padding: 2rem 4vw;
-    background: #fdf8ee;
-    background-image: repeating-linear-gradient(#fdf8ee 0 31px, #e8dfc8 31px 32px);
-    color: #4a3a2a;
+  :root{
+    --bg:#1a1a2e;--bg-2:#16162a;--card:#262640;--card-2:#2e2e4a;
+    --line:#3a3a5c;--ink:#e8e8f0;--muted:#9a98bd;
+    --purple:#8b7bff;--lime:#b8f73d;--blue:#4dd2ff;
+    --orange:#ff9f43;--pink:#ff6fae;
+    --r:18px;--shadow:0 18px 40px -20px rgba(0,0,0,.65);
   }
-  .container { width: 100%; max-width: none; margin: 0; position: relative; }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;font-family:'Nunito',system-ui,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.55;
+    -webkit-font-smoothing:antialiased;padding-bottom:64px;
+    position:relative;overflow-x:hidden;
+  }
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:twinkle var(--d,3s) ease-in-out infinite alternate;}
+  .stars i.big{width:3px;height:3px;box-shadow:0 0 6px 1px rgba(139,123,255,.7);background:#cfc6ff;}
+  .stars i.lime{background:var(--lime);box-shadow:0 0 6px 1px rgba(184,247,61,.6);}
+  @keyframes twinkle{from{opacity:.15;}to{opacity:.85;}}
 
-  .header {
-    background: #ff8c42; border-radius: 18px 18px 4px 4px; padding: 2rem 2.5rem; margin-bottom: 1.75rem;
-    text-align: center; position: relative; transform: rotate(-0.3deg);
-    box-shadow: 3px 4px 0 rgba(0,0,0,0.08);
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 18px;}
+
+  /* HEADER */
+  header.hero{
+    position:relative;z-index:1;margin:22px auto 0;max-width:1000px;
+    border-radius:26px;
+    background:radial-gradient(120% 120% at 10% 0%,rgba(139,123,255,.55) 0%,transparent 55%),
+               radial-gradient(120% 120% at 95% 110%,rgba(77,210,255,.4) 0%,transparent 55%),
+               linear-gradient(135deg,#2b2553 0%,#211d40 60%,#1c2742 100%);
+    border:1px solid rgba(139,123,255,.35);
+    box-shadow:0 24px 50px -22px rgba(139,123,255,.5),inset 0 1px 0 rgba(255,255,255,.06);
+    padding:34px 30px 30px;text-align:center;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
   }
-  .header::after {
-    content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
-    width: 100px; height: 22px; background: #ffe5cc; opacity: 0.8; border-radius: 2px;
+  .hero .eyebrow{
+    display:inline-block;font-family:'Baloo 2';font-weight:600;font-size:13px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--lime);
+    background:rgba(184,247,61,.12);border:1px solid rgba(184,247,61,.3);
+    padding:5px 14px;border-radius:999px;margin-bottom:14px;
   }
-  .header .escola { font-size: 14px; letter-spacing: 1px; color: #4a1b0c; font-weight: 800; }
-  .header h1 { font-family: 'Patrick Hand', cursive; font-size: 42px; color: #4a1b0c; margin: 8px 0 4px; }
-  .header .sub { font-size: 16px; font-weight: 700; color: #5a2a0c; margin-bottom: 10px; }
-  .header .contagem {
-    display: inline-block; background: #fff; color: #ff8c42; font-family: 'Patrick Hand', cursive;
-    font-size: 16px; padding: 6px 18px; border-radius: 20px; margin-top: 6px;
+  .hero h1{
+    font-family:'Baloo 2';font-weight:800;font-size:clamp(28px,6vw,42px);
+    margin:0;line-height:1.1;width:100%;text-align:center;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    background:linear-gradient(120deg,#fff,#cfc6ff 60%,#a7e6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .sub{font-weight:700;color:var(--muted);margin-top:8px;font-size:30px;}
+  .hero .contagem{
+    margin-top:16px;font-weight:800;font-size:14px;color:#1a1a2e;
+    background:linear-gradient(135deg,var(--lime),#8be03d);
+    display:inline-block;padding:8px 22px;border-radius:999px;
   }
 
-  .grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;
+  /* GRID */
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:18px;margin-top:24px;
   }
 
-  .card {
-    background: #fff; border-radius: 18px; padding: 1.5rem; position: relative;
-    box-shadow: 2px 4px 0 rgba(0,0,0,0.06); border: 2px solid #f0e6d2; display: flex; flex-direction: column;
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--accent,#8b7bff);
+    border-radius:var(--r);box-shadow:var(--shadow);
+    padding:20px 20px 18px;display:flex;flex-direction:column;
+    transition:transform .15s,box-shadow .15s;
   }
-
-  .card .topo { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-  .card .numero {
-    width: 38px; height: 38px; border-radius: 50%; background: #ef476f; color: #fff;
-    display: flex; align-items: center; justify-content: center; font-family: 'Patrick Hand', cursive;
-    font-size: 18px; flex-shrink: 0;
+  .card:hover{transform:translateY(-3px);box-shadow:0 22px 44px -20px rgba(139,123,255,.45),var(--shadow);}
+  .card .topo{display:flex;align-items:center;gap:13px;margin-bottom:12px;}
+  .card .numero{
+    flex:none;font-family:'Baloo 2';font-weight:800;font-size:18px;color:#1a1a2e;
+    min-width:40px;height:40px;border-radius:13px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--accent,#8b7bff),#b9aeff);
+    box-shadow:0 6px 16px -6px var(--accent,#8b7bff);
   }
-  .card .titulo { font-family: 'Patrick Hand', cursive; font-size: 20px; color: #4a3a2a; line-height: 1.2; }
-  .card .descricao { font-size: 14.5px; font-weight: 600; color: #6a5a4a; margin-bottom: 16px; flex-grow: 1; }
+  .card .titulo{font-family:'Baloo 2';font-weight:700;font-size:18px;color:#fff;line-height:1.25;}
+  .card .descricao{font-size:14.5px;font-weight:600;color:var(--muted);margin-bottom:18px;flex-grow:1;line-height:1.55;}
 
-  .botoes { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn {
-    flex: 1; min-width: 130px; text-align: center; padding: 11px 14px; border-radius: 12px;
-    font-family: 'Patrick Hand', cursive; font-size: 15px; font-weight: 700; text-decoration: none;
-    cursor: pointer; transition: transform 0.1s; border: none;
+  .botoes{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{
+    flex:1;min-width:130px;text-align:center;padding:12px 14px;border-radius:13px;
+    font-family:'Baloo 2';font-weight:700;font-size:14.5px;text-decoration:none;
+    cursor:pointer;transition:transform .12s,box-shadow .18s,filter .18s;border:none;
   }
-  .btn-prova { background: #06a77d; color: #fff; box-shadow: 0 4px 0 #04684f; }
-  .btn-prova:hover { transform: translateY(2px); box-shadow: 0 2px 0 #04684f; }
-  .btn-mapa { background: #2f8fef; color: #fff; box-shadow: 0 4px 0 #1c5fa8; }
-  .btn-mapa:hover { transform: translateY(2px); box-shadow: 0 2px 0 #1c5fa8; }
+  .btn-prova{color:#1a1a2e;background:linear-gradient(135deg,var(--lime),#8be03d);box-shadow:0 12px 22px -10px rgba(184,247,61,.6);}
+  .btn-prova:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 16px 28px -10px rgba(184,247,61,.8);}
+  .btn-mapa{color:#1a1a2e;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 12px 22px -10px rgba(77,210,255,.6);}
+  .btn-mapa:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 16px 28px -10px rgba(77,210,255,.8);}
 
-  .doodle { position: absolute; pointer-events: none; z-index: 5; filter: drop-shadow(1px 3px 2px rgba(0,0,0,0.12)); }
-  .d1 { left: -50px; top: -10px; transform: rotate(-4deg); }
-  .d2 { right: -50px; top: 6px; transform: rotate(4deg); }
-  @media (max-width: 980px) { .doodle { display: none; } }
+  footer{position:relative;z-index:1;text-align:center;color:var(--muted);font-weight:600;font-size:13px;margin-top:38px;}
+
+  @media(max-width:560px){
+    .hero{margin-top:14px;padding:26px 18px 24px;border-radius:22px;}
+    .wrap{padding:0 14px;}
+    .card{padding:18px 16px;}
+  }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="doodle d1"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#06a77d" text-anchor="middle">L</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
-  <div class="doodle d2"><svg viewBox="0 0 90 110" width="84" height="103"><text x="45" y="92" font-family="Baloo 2" font-weight="800" font-size="92" fill="#ffb703" text-anchor="middle">S</text><ellipse cx="27" cy="29" rx="8" ry="10" fill="#fff"/><ellipse cx="59" cy="29" rx="8" ry="10" fill="#fff"/><circle cx="28" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="60" cy="32" r="4.5" fill="#1b1b1b"/><circle cx="26" cy="29" r="1.4" fill="#fff"/><circle cx="58" cy="29" r="1.4" fill="#fff"/><path d="M29 58 Q44 68 59 58" stroke="#1b1b1b" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg></div>
+<div class="stars" id="stars"></div>
 
-  <div class="header">
-    <div class="escola">PORTAL DE PROVAS — PORTUGUÊS</div>
-    <h1>📒 Caderno Divertido</h1>
-    <div class="sub">5º Ano · Língua Portuguesa</div>
-    <div class="contagem">6 provas · 6 mapas mentais</div>
-  </div>
+<header class="hero">
+  <span class="eyebrow">5º Ano · Ensino Fundamental</span>
+  <h1>📒 Portal de Provas</h1>
+  <div class="sub">Língua Portuguesa</div>
+  <div class="contagem">6 provas · 6 mapas mentais</div>
+</header>
 
+<div class="wrap">
   <div class="grid">
 
-    <div class="card">
+    <div class="card" style="--accent:#8b7bff">
       <div class="topo"><div class="numero">1</div><div class="titulo">Interpretação Textual</div></div>
       <div class="descricao">Discurso direto e indireto, inferência, fato x opinião e reconhecimento do gênero do texto.</div>
       <div class="botoes">
@@ -90,7 +130,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="--accent:#4dd2ff">
       <div class="topo"><div class="numero">2</div><div class="titulo">Grau Superlativo do Adjetivo</div></div>
       <div class="descricao">Formas analítica e sintética do superlativo absoluto, sufixos especiais e exceções.</div>
       <div class="botoes">
@@ -99,7 +139,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="--accent:#ff9f43">
       <div class="topo"><div class="numero">3</div><div class="titulo">Ortografia</div></div>
       <div class="descricao">Mas, mais, mal, mau, onde e aonde: quando usar cada um corretamente.</div>
       <div class="botoes">
@@ -108,7 +148,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="--accent:#ff6fae">
       <div class="topo"><div class="numero">4</div><div class="titulo">Gênero Textual — Cartaz</div></div>
       <div class="descricao">Linguagem verbal e não verbal, frases de efeito e diferença entre cartaz, notícia e carta pessoal.</div>
       <div class="botoes">
@@ -117,7 +157,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="--accent:#b8f73d">
       <div class="topo"><div class="numero">5</div><div class="titulo">Gênero Textual — Narrativa de Suspense</div></div>
       <div class="descricao">Narrador-personagem x observador, discurso direto e indireto, estrutura da narrativa.</div>
       <div class="botoes">
@@ -126,7 +166,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="--accent:#8b7bff">
       <div class="topo"><div class="numero">6</div><div class="titulo">Gênero Textual — Reportagem</div></div>
       <div class="descricao">Características da reportagem, fato x opinião e confiabilidade das fontes.</div>
       <div class="botoes">
@@ -136,6 +176,18 @@
     </div>
 
   </div>
+
+  <footer>Caderno Divertido · Dark Mode Kids · Português 5º Ano</footer>
 </div>
+
+<script>
+const starsDiv=document.getElementById('stars');
+let html='';
+for(let i=0;i<80;i++){
+  const cls=i%11===0?'big':(i%17===0?'lime':'');
+  html+=`<i class="${cls}" style="left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${(2+Math.random()*4).toFixed(1)}s;animation-delay:${(Math.random()*4).toFixed(1)}s"></i>`;
+}
+starsDiv.innerHTML=html;
+</script>
 </body>
 </html>
